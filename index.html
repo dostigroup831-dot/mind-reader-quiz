@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101a36">
+<title>Dosti Group | Mind Reader Quiz</title>
+<style>
+:root{--bg:#0b1020;--panel:#141d35;--panel2:#1c2948;--blue:#3978ff;--cyan:#55d6ff;--pink:#ff5c9a;--text:#f5f7ff;--muted:#aab5d1;--good:#38d996;--bad:#ff6b78}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#1b2d59 0,#0b1020 48%);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;min-height:100vh;padding:22px 14px}
+.wrap{max-width:760px;margin:0 auto}.brand{text-align:center;margin:12px 0 22px}.logo{display:inline-grid;place-items:center;width:58px;height:58px;border-radius:18px;background:linear-gradient(135deg,var(--blue),var(--cyan));font-size:28px;box-shadow:0 10px 35px #3978ff55}.brand h1{font-size:clamp(25px,6vw,38px);margin:12px 0 4px}.brand p{color:var(--muted);margin:0}.card{background:linear-gradient(160deg,#172342f5,#111a30f5);border:1px solid #34466e;border-radius:22px;padding:22px;box-shadow:0 18px 55px #0005}.hidden{display:none!important}.eyebrow{color:var(--cyan);font-weight:800;letter-spacing:1.5px;font-size:12px;text-transform:uppercase}.intro{color:var(--muted);line-height:1.6}.field-label{display:block;font-weight:700;margin:18px 0 8px}input,select{width:100%;padding:14px;border:1px solid #40547e;border-radius:12px;background:#0d1630;color:white;font:inherit;outline:none}input:focus,select:focus{border-color:var(--cyan)}.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}.modes{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px}.mode{padding:18px 12px;border:1px solid #40547e;border-radius:16px;background:#101a33;color:white;font:inherit;font-weight:800;cursor:pointer}.mode small{display:block;color:var(--muted);font-weight:500;margin-top:6px}.mode.active{border-color:var(--pink);background:#40203b}.mode.sad.active{border-color:#70a7ff;background:#1d3158}.btn{border:0;border-radius:13px;padding:14px 18px;background:linear-gradient(110deg,var(--blue),#5a9dff);color:white;font:inherit;font-weight:800;cursor:pointer;width:100%;margin-top:20px}.btn:disabled{opacity:.45;cursor:not-allowed}.btn.secondary{background:#263654;border:1px solid #465b82}.topline{display:flex;justify-content:space-between;gap:12px;color:var(--muted);font-size:14px}.progress{height:9px;background:#263654;border-radius:20px;overflow:hidden;margin:13px 0 22px}.bar{height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--cyan));transition:width .25s}.question{font-size:clamp(20px,5vw,26px);line-height:1.35;margin:10px 0 18px}.answers{display:grid;gap:10px}.answer{padding:14px 15px;text-align:left;border:1px solid #3b4f78;border-radius:13px;background:#111b33;color:white;font:inherit;cursor:pointer}.answer:hover{border-color:var(--cyan)}.answer.selected{border:2px solid var(--cyan);background:#1b3157}.answer.correct{border-color:var(--good);background:#123b35}.answer.wrong{border-color:var(--bad);background:#452333}.note{color:var(--muted);font-size:13px;margin-top:14px}.result{text-align:center}.score{font-size:clamp(46px,12vw,68px);font-weight:900;color:var(--cyan);margin:8px}.review{text-align:left;margin-top:22px}.review-item{padding:14px 0;border-top:1px solid #34466e}.review-item p{margin:5px 0;color:var(--muted);font-size:14px}.goodtxt{color:var(--good)}.badtxt{color:var(--bad)}.footer{text-align:center;color:#8290b0;font-size:12px;margin:20px 0 8px}.pill{display:inline-block;padding:5px 10px;border-radius:30px;background:#263654;color:#dce8ff;font-size:12px;font-weight:700}
+@media(max-width:520px){.card{padding:18px}.row{grid-template-columns:1fr}.modes{gap:8px}.mode{padding:15px 8px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="brand">
+  <div class="logo">🧠</div>
+  <h1>Dosti Group Mind Reader Quiz</h1>
+  <p>Think • Choose • Discover your result</p>
+</header>
+
+<main>
+<section class="card" id="start">
+  <div class="eyebrow">Welcome to the quiz</div>
+  <h2>Let's see what your answers reveal!</h2>
+  <p class="intro">Choose a language and a quiz mood, then answer 10 questions. At the end, you'll see your score and the correct answers. This is a fun quiz—not real mind reading.</p>
+  <label class="field-label" for="player">Your name (optional)</label>
+  <input id="player" maxlength="35" placeholder="Enter your name">
+  <div class="row">
+    <div><label class="field-label" for="language">Language / भाषा</label>
+      <select id="language"><option value="en">English</option><option value="hi">हिन्दी</option></select>
+    </div>
+    <div><label class="field-label" for="unused">Quiz length</label>
+      <input id="unused" value="10 Questions" disabled>
+    </div>
+  </div>
+  <label class="field-label">Choose your mood / अपना मूड चुनें</label>
+  <div class="modes">
+    <button class="mode active" data-mode="love" type="button">❤️ Love Quiz<small>Love & feelings</small></button>
+    <button class="mode sad" data-mode="sad" type="button">💔 Sad Quiz<small>Emotions & life</small></button>
+  </div>
+  <button class="btn" id="startBtn">Start Quiz 🚀</button>
+</section>
+
+<section class="card hidden" id="quiz">
+  <div class="topline"><span id="qCount">Question 1 of 10</span><span class="pill" id="modeTag">❤️ Love</span></div>
+  <div class="progress"><div class="bar" id="bar"></div></div>
+  <div class="eyebrow" id="category">LOVE QUIZ</div>
+  <h2 class="question" id="question"></h2>
+  <div class="answers" id="answers"></div>
+  <p class="note" id="hint">Choose one answer to continue.</p>
+  <button class="btn" id="nextBtn" disabled>Next question →</button>
+</section>
+
+<section class="card hidden result" id="result">
+  <div class="eyebrow">Quiz completed</div>
+  <h2 id="resultTitle">Your result</h2>
+  <div class="score" id="score">0/10</div>
+  <p id="message" class="intro"></p>
+  <p><span class="pill" id="percent">0%</span></p>
+  <button class="btn" id="emailBtn">✉️ Email my result</button>
+  <button class="btn secondary" id="shareBtn">Share result</button>
+  <button class="btn secondary" id="restartBtn">Play again</button>
+  <div class="review"><h3 id="reviewTitle">Answer review</h3><div id="reviewList"></div></div>
+</section>
+</main>
+<div class="footer">Made with ❤️ by Dosti Group</div>
+</div>
+<script>
+const bank = {
+ en: {
+  love: [
+   ["If someone you love is upset, what is the best first step?",["Listen calmly","Ignore them","Make fun of them","Start an argument"],0],
+   ["What helps a relationship grow?",["Honesty and respect","Jealousy all the time","Keeping secrets","Never talking"],0],
+   ["If you miss someone, what can you do?",["Send a kind message","Spread rumours","Insult them","Pretend to be cruel"],0],
+   ["What is a thoughtful way to show love?",["Pay attention to their feelings","Only buy expensive gifts","Demand attention","Break promises"],0],
+   ["What should you do after making a mistake?",["Apologise sincerely","Blame everyone","Hide it forever","Get angry"],0],
+   ["What matters most in lasting love?",["Trust and care","Showing off","Controlling someone","Constant arguments"],0],
+   ["Your partner has a different opinion. You should…",["Respectfully discuss it","Shout louder","Stop listening","Insult them"],0],
+   ["Which is a healthy boundary?",["Respecting each other's space","Checking every message","Forbidding friendships","Demanding passwords"],0],
+   ["How can you support someone on a hard day?",["Ask how you can help","Tell them to stop feeling","Ignore them","Compare their pain"],0],
+   ["A strong relationship is built by…",["Kindness, trust and effort","One person doing everything","Fear","Lies"],0]
+  ],
+  sad: [
+   ["When you feel sad, what is a healthy first step?",["Talk to someone you trust","Keep every feeling bottled up","Hurt someone","Give up on everything"],0],
+   ["A difficult day does not mean…",["Your whole future is ruined","You may need rest","You can ask for help","Tomorrow can be different"],0],
+   ["What can help when stress feels heavy?",["Take a slow breath and seek support","Make a rushed decision","Blame yourself for everything","Stop sleeping"],0],
+   ["If a friend is sad, you can…",["Listen without judging","Laugh at them","Share their secret","Walk away on purpose"],0],
+   ["What is a kind thing to tell yourself?",["I can take one step at a time","I always fail","I am worthless","Nothing can improve"],0],
+   ["After a setback, a helpful response is…",["Learn and try again when ready","Never try again","Blame everyone","Hide from all support"],0],
+   ["Which habit may support your mood?",["Rest, movement and connection","Staying isolated always","Skipping all meals","Never taking breaks"],0],
+   ["If feelings become overwhelming, you should…",["Reach out to a trusted person or professional","Face it completely alone","Ignore every warning sign","Be ashamed"],0],
+   ["What does asking for help mean?",["It is a brave and sensible step","It is weakness","You have failed","You should feel guilty"],0],
+   ["Hope can mean…",["Believing change is possible, one step at a time","Expecting life to be perfect","Never feeling sad","Ignoring problems"],0]
+  ]
+ },
+ hi: {
+  love: [
+   ["अगर आपका पसंदीदा इंसान नाराज़ है, तो सबसे अच्छा पहला कदम क्या है?",["शांति से उसकी बात सुनना","उसे नज़रअंदाज़ करना","उसका मज़ाक उड़ाना","बहस शुरू करना"],0],
+   ["रिश्ता किससे मज़बूत होता है?",["ईमानदारी और सम्मान","हर समय शक करना","बातें छिपाना","बात न करना"],0],
+   ["अगर किसी की याद आए, तो क्या कर सकते हैं?",["प्यार से संदेश भेजना","अफ़वाह फैलाना","बुरा बोलना","जानबूझकर रूखा बनना"],0],
+   ["प्यार दिखाने का अच्छा तरीका क्या है?",["उसकी भावनाओं का ध्यान रखना","सिर्फ़ महंगे तोहफ़े देना","ध्यान देने की ज़िद करना","वादे तोड़ना"],0],
+   ["गलती होने पर क्या करना चाहिए?",["दिल से माफ़ी माँगना","दूसरों को दोष देना","हमेशा छिपाना","गुस्सा करना"],0],
+   ["लंबे रिश्ते में सबसे ज़रूरी क्या है?",["भरोसा और परवाह","दिखावा","किसी को काबू करना","लगातार झगड़ा"],0],
+   ["साथी की राय अलग हो, तो क्या करें?",["इज़्ज़त से बात करें","ज़ोर से चिल्लाएँ","सुनना बंद करें","बुरा बोलें"],0],
+   ["अच्छी निजी सीमा कौन-सी है?",["एक-दूसरे की जगह का सम्मान","हर संदेश जाँचना","दोस्ती पर रोक लगाना","पासवर्ड माँगना"],0],
+   ["मुश्किल दिन में किसी का साथ कैसे दें?",["पूछें कि कैसे मदद कर सकते हैं","कहें उदास होना बंद करो","नज़रअंदाज़ करें","उसके दुख की तुलना करें"],0],
+   ["मज़बूत रिश्ता किससे बनता है?",["मेहरबानी, भरोसा और कोशिश","सिर्फ़ एक इंसान की मेहनत","डर","झूठ"],0]
+  ],
+  sad: [
+   ["उदास महसूस हो तो अच्छा पहला कदम क्या है?",["भरोसेमंद इंसान से बात करना","हर बात मन में दबाना","किसी को चोट पहुँचाना","सब कुछ छोड़ देना"],0],
+   ["एक मुश्किल दिन का मतलब यह नहीं कि…",["आपका पूरा भविष्य खराब हो गया","आपको आराम चाहिए","आप मदद माँग सकते हैं","कल बेहतर हो सकता है"],0],
+   ["तनाव ज़्यादा हो तो क्या मदद कर सकता है?",["धीरे साँस लें और सहारा लें","जल्दबाज़ी में फैसला करें","हर बात के लिए खुद को दोष दें","सोना बंद करें"],0],
+   ["दोस्त उदास हो तो आप क्या कर सकते हैं?",["बिना जज किए उसकी बात सुनें","उस पर हँसें","उसका राज़ बताएँ","जानबूझकर दूर चले जाएँ"],0],
+   ["खुद से कौन-सी अच्छी बात कहनी चाहिए?",["मैं एक-एक कदम आगे बढ़ सकता हूँ","मैं हमेशा असफल हूँ","मेरी कोई कीमत नहीं","कुछ बेहतर नहीं हो सकता"],0],
+   ["नाकामी के बाद अच्छा तरीका क्या है?",["सीखकर तैयार होने पर फिर कोशिश करना","कभी कोशिश न करना","सबको दोष देना","हर मदद से दूर भागना"],0],
+   ["मूड के लिए कौन-सी आदत मददगार हो सकती है?",["आराम, हल्की गतिविधि और लोगों से जुड़ना","हमेशा अकेले रहना","खाना छोड़ना","कभी आराम न करना"],0],
+   ["भावनाएँ बहुत भारी लगें तो क्या करें?",["भरोसेमंद व्यक्ति या विशेषज्ञ से मदद लें","सब अकेले सहें","हर संकेत को नज़रअंदाज़ करें","शर्म महसूस करें"],0],
+   ["मदद माँगने का क्या मतलब है?",["यह हिम्मत और समझदारी का कदम है","यह कमज़ोरी है","आप हार गए","आपको शर्मिंदा होना चाहिए"],0],
+   ["उम्मीद का मतलब क्या हो सकता है?",["धीरे-धीरे बदलाव मुमकिन मानना","ज़िंदगी हमेशा परफेक्ट होगी","कभी उदास न होना","समस्याओं को अनदेखा करना"],0]
+  ]
+ }
+};
+const ui = {
+ en:{start:"Start Quiz 🚀",next:"Next question →",finish:"See my result 🎉",choose:"Choose one answer to continue.",result:"Your result",review:"Answer review",correct:"Correct answer",your:"Your answer",right:"Correct",wrong:"Not quite",email:"Email my result",share:"Share result",again:"Play again",love:"❤️ Love",sad:"💔 Sad",great:"Excellent work!",nice:"Good effort! Keep learning.",try:"Keep going—you can improve!",name:"Player"},
+ hi:{start:"क्विज़ शुरू करें 🚀",next:"अगला सवाल →",finish:"मेरा रिज़ल्ट देखें 🎉",choose:"आगे बढ़ने के लिए एक जवाब चुनें।",result:"आपका रिज़ल्ट",review:"जवाबों की जाँच",correct:"सही जवाब",your:"आपका जवाब",right:"सही",wrong:"गलत",email:"मेरा रिज़ल्ट ईमेल करें",share:"रिज़ल्ट शेयर करें",again:"फिर से खेलें",love:"❤️ प्यार",sad:"💔 उदासी",great:"बहुत बढ़िया!",nice:"अच्छी कोशिश! सीखते रहें।",try:"कोशिश जारी रखें—आप बेहतर कर सकते हैं!",name:"खिलाड़ी"}
+};
+let mode="love", lang="en", index=0, score=0, selected=null, answers=[], player="";
+const $=id=>document.getElementById(id);
+document.querySelectorAll(".mode").forEach(b=>b.addEventListener("click",()=>{mode=b.dataset.mode;document.querySelectorAll(".mode").forEach(x=>x.classList.toggle("active",x===b));}));
+function start(){lang=$("language").value;player=$("player").value.trim()||ui[lang].name;index=0;score=0;answers=[];$("start").classList.add("hidden");$("result").classList.add("hidden");$("quiz").classList.remove("hidden");render();}
+function render(){const qs=bank[lang][mode];selected=null;$("qCount").textContent=lang==="hi"?`सवाल ${index+1} / 10`:`Question ${index+1} of 10`;$("bar").style.width=`${index*10}%`;$("modeTag").textContent=ui[lang][mode];$("category").textContent=mode==="love"?"LOVE QUIZ":"SAD / LIFE QUIZ";$("question").textContent=qs[index][0];$("answers").innerHTML="";qs[index][1].forEach((a,i)=>{const b=document.createElement("button");b.className="answer";b.type="button";b.textContent=`${String.fromCharCode(65+i)}. ${a}`;b.addEventListener("click",()=>{selected=i;document.querySelectorAll(".answer").forEach((x,j)=>x.classList.toggle("selected",j===i));$("nextBtn").disabled=false;});$("answers").appendChild(b);});$("hint").textContent=ui[lang].choose;$("nextBtn").disabled=true;$("nextBtn").textContent=index===9?ui[lang].finish:ui[lang].next;}
+function next(){if(selected===null)return;const q=bank[lang][mode][index];answers.push(selected);if(selected===q[2])score++;index++;if(index<10)render();else showResult();}
+function showResult(){$("quiz").classList.add("hidden");$("result").classList.remove("hidden");const t=ui[lang];$("resultTitle").textContent=`${player} — ${t.result}`;$("score").textContent=`${score}/10`;$("percent").textContent=`${score*10}%`;$("message").textContent=score>=8?t.great:score>=5?t.nice:t.try;$("emailBtn").textContent="✉️ "+t.email;$("shareBtn").textContent=t.share;$("restartBtn").textContent=t.again;$("reviewTitle").textContent=t.review;const list=$("reviewList");list.innerHTML="";bank[lang][mode].forEach((q,i)=>{const ok=answers[i]===q[2];const d=document.createElement("div");d.className="review-item";const p1=document.createElement("strong");p1.textContent=`${i+1}. ${q[0]}`;const p2=document.createElement("p");p2.className=ok?"goodtxt":"badtxt";p2.textContent=`${ok?"✓ "+t.right:"✗ "+t.wrong} — ${t.your}: ${q[1][answers[i]]}`;const p3=document.createElement("p");p3.textContent=`${t.correct}: ${q[1][q[2]]}`;d.append(p1,p2,p3);list.appendChild(d);});}
+function resultText(){return `Dosti Group Mind Reader Quiz\nName: ${player}\nMode: ${mode.toUpperCase()}\nScore: ${score}/10 (${score*10}%)\n\n${bank[lang][mode].map((q,i)=>`${i+1}. ${q[0]}\nYour answer: ${q[1][answers[i]]}\nCorrect answer: ${q[1][q[2]]}`).join("\n\n")}`;}
+$("startBtn").addEventListener("click",start);$("nextBtn").addEventListener("click",next);$("restartBtn").addEventListener("click",()=>{$("result").classList.add("hidden");$("start").classList.remove("hidden");});$("emailBtn").addEventListener("click",()=>{const subject=encodeURIComponent("My Dosti Group Mind Reader Quiz Result");const body=encodeURIComponent(resultText());location.href=`mailto:dostigroup831@gmail.com?subject=${subject}&body=${body}`;});$("shareBtn").addEventListener("click",async()=>{const txt=resultText();if(navigator.share){try{await navigator.share({title:"Dosti Group Mind Reader Quiz",text:txt});}catch(e){}}else if(navigator.clipboard){await navigator.clipboard.writeText(txt);alert(lang==="hi"?"रिज़ल्ट कॉपी हो गया!":"Result copied!");}else{alert(txt);}});
+</script>
+</body>
+</html>
